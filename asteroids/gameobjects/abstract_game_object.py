@@ -20,7 +20,7 @@ class AbstractGameObject():
         '''
         raise NotImplementedError(ERROR_MESSAGE)
 
-    def update(self):
+    def update(self, delta_time):
         '''
         Updates the game object's position and velocity.
         '''
