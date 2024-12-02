@@ -1,3 +1,7 @@
+'''
+This module contains the unit tests for the math_utils module.
+'''
+
 import unittest
 
 from ..utils.math_utils import get_point_on_circle, is_point_on_right_side_of_line

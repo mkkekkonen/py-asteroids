@@ -1,3 +1,7 @@
+'''
+This module contains the Asteroid class.
+'''
+
 import random
 
 from sdl2 import SDL_SetRenderDrawColor
@@ -6,6 +10,7 @@ from sdl2.sdlgfx import lineColor
 from .abstract_game_object import AbstractGameObject
 from ..utils.math_utils import (rotate_point, get_point_on_circle,
                                 is_point_on_right_side_of_line)
+from ..mixer import Mixer
 
 
 class Asteroid(AbstractGameObject):
@@ -13,7 +18,8 @@ class Asteroid(AbstractGameObject):
     This class represents an asteroid.
     '''
 
-    def __init__(self, x: int, y: int, radius: int, velocity: tuple, angular_velocity: int, rotation: int, color: int):
+    def __init__(self, x: int, y: int, radius: int, velocity: tuple,
+                 angular_velocity: int, rotation: int, color: int):
         self.position = (x, y)
         self.radius = radius
         self.velocity = velocity
@@ -21,6 +27,7 @@ class Asteroid(AbstractGameObject):
         self.health = 100
         self.rotation = rotation
         self.color = color or 0xFF00FF00
+        self.exploded = False
 
         self.points = []
         for i in range(0, 5):
@@ -34,7 +41,11 @@ class Asteroid(AbstractGameObject):
         '''
         This method is called when the asteroid is hit by a bullet.
         '''
+
         self.health -= 25
+        if self.health <= 0 and not self.exploded:
+            self.exploded = True
+            Mixer.get_instance().play_sound('explosion')
 
     def is_dead(self) -> bool:
         '''

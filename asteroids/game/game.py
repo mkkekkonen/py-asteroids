@@ -6,7 +6,8 @@ import sdl2.ext
 
 from ..gameobjects import Ship
 from .asteroid_generator import AsteroidGenerator
-from .singleton_container import SingletonContainer
+from ..mixer import Mixer
+from ..game.bullet_manager import BulletManager
 
 
 class Game():
@@ -17,6 +18,9 @@ class Game():
     def __init__(self, window):
         self.renderer = sdl2.ext.Renderer(
             window, flags=sdl2.SDL_RENDERER_SOFTWARE)
+
+        Mixer.get_instance().play_music()
+
         self.ship = Ship((400, 300), 20, 0, 0, 0)
         self.asteroids = AsteroidGenerator().generate(5)
 
@@ -32,8 +36,7 @@ class Game():
         for asteroid in self.asteroids:
             asteroid.render(self.renderer.renderer)
 
-        SingletonContainer.get_instance().get_singleton(
-            'BulletManager').render(self.renderer.renderer)
+        BulletManager.get_instance().render(self.renderer.renderer)
 
         self.renderer.present()
 
@@ -48,8 +51,7 @@ class Game():
 
         self.handle_bullet_collisions()
 
-        SingletonContainer.get_instance().get_singleton(
-            'BulletManager').update(delta_time)
+        BulletManager.get_instance().update(delta_time)
 
     def handle_events(self, event):
         '''
@@ -63,7 +65,7 @@ class Game():
         '''
 
         for asteroid in self.asteroids:
-            for bullet in SingletonContainer.get_instance().get_singleton('BulletManager').bullets:
+            for bullet in BulletManager.get_instance().bullets:
                 if asteroid.is_point_inside(bullet.position):
                     print('Hit!')
                     asteroid.hit()
