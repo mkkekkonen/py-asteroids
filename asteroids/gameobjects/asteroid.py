@@ -4,7 +4,8 @@ from sdl2 import SDL_SetRenderDrawColor
 from sdl2.sdlgfx import lineColor
 
 from .abstract_game_object import AbstractGameObject
-from ..utils.math_utils import rotate_point, get_point_on_circle
+from ..utils.math_utils import (rotate_point, get_point_on_circle,
+                                is_point_on_right_side_of_line)
 
 
 class Asteroid(AbstractGameObject):
@@ -33,7 +34,7 @@ class Asteroid(AbstractGameObject):
         '''
         This method is called when the asteroid is hit by a bullet.
         '''
-        self.health -= 10
+        self.health -= 25
 
     def is_dead(self) -> bool:
         '''
@@ -83,3 +84,25 @@ class Asteroid(AbstractGameObject):
         '''
         Not used.
         '''
+
+    def is_point_inside(self, point: tuple):
+        '''
+        Returns True if the point is inside the asteroid, False otherwise.
+        '''
+
+        for i in range(0, 5):
+            start_point = self.points[i]
+            start_point = rotate_point(
+                start_point, self.rotation)
+            start_point = (start_point[0] + self.position[0],
+                           start_point[1] + self.position[1])
+
+            end_point = self.points[(i + 1) % 5]
+            end_point = rotate_point(end_point, self.rotation)
+            end_point = (end_point[0] + self.position[0],
+                         end_point[1] + self.position[1])
+
+            if not is_point_on_right_side_of_line(start_point, end_point, point):
+                return False
+
+        return True

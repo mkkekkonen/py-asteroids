@@ -21,7 +21,8 @@ class Ship(AbstractGameObject):
     This class represents the player's ship.
     '''
 
-    def __init__(self, position: int, radius: int, velocity: float, acceleration: float, rotation: int, color: int):
+    def __init__(self, position: int, radius: int,
+                 velocity: float, acceleration: float, rotation: int):
         self.position = position
         self.circle_radius = radius
         self.velocity = velocity

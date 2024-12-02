@@ -17,7 +17,7 @@ class Game():
     def __init__(self, window):
         self.renderer = sdl2.ext.Renderer(
             window, flags=sdl2.SDL_RENDERER_SOFTWARE)
-        self.ship = Ship((400, 300), 20, 0, 0, 0, 0x00FF00)
+        self.ship = Ship((400, 300), 20, 0, 0, 0)
         self.asteroids = AsteroidGenerator().generate(5)
 
     def render(self):
@@ -46,6 +46,8 @@ class Game():
         for asteroid in self.asteroids:
             asteroid.update(delta_time)
 
+        self.handle_bullet_collisions()
+
         SingletonContainer.get_instance().get_singleton(
             'BulletManager').update(delta_time)
 
@@ -54,3 +56,15 @@ class Game():
         Handles events for the game and game objects.
         '''
         self.ship.handle_events(event)
+
+    def handle_bullet_collisions(self):
+        '''
+        Handles collisions between bullets and asteroids.
+        '''
+
+        for asteroid in self.asteroids:
+            for bullet in SingletonContainer.get_instance().get_singleton('BulletManager').bullets:
+                if asteroid.is_point_inside(bullet.position):
+                    print('Hit!')
+                    asteroid.hit()
+                    bullet.destroy()

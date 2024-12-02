@@ -28,3 +28,11 @@ def rotate_point(point, angle, origin=(0, 0)):
     qy = int(oy + math.sin(angle_rad) * (px - ox) +
              math.cos(angle_rad) * (py - oy))
     return qx, qy
+
+
+def is_point_on_right_side_of_line(start_point: tuple, end_point: tuple, point: tuple):
+    '''
+    This function returns True if the point is on the right side of the line, False otherwise.
+    '''
+    return ((end_point[0] - start_point[0]) * (point[1] - start_point[1])
+            - (end_point[1] - start_point[1]) * (point[0] - start_point[0]) > 0)

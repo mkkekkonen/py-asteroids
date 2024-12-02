@@ -21,12 +21,14 @@ class Bullet(AbstractGameObject):
         self.velocity = velocity
         self.rotation = rotation
         self.color = color
+        self.dead = False
 
     def is_dead(self) -> bool:
         '''
         Returns True if the bullet is dead, False otherwise.
         '''
-        return (self.position[0] < 0
+        return (self.dead
+                or self.position[0] < 0
                 or self.position[0] > 800
                 or self.position[1] < 0
                 or self.position[1] > 600)
@@ -60,3 +62,9 @@ class Bullet(AbstractGameObject):
         '''
         Not used.
         '''
+
+    def destroy(self):
+        '''
+        Destroys the bullet.
+        '''
+        self.dead = True
