@@ -6,6 +6,7 @@ import sdl2.ext
 
 from ..gameobjects import Ship
 from .asteroid_generator import AsteroidGenerator
+from .singleton_container import SingletonContainer
 
 
 class Game():
@@ -25,9 +26,15 @@ class Game():
         '''
 
         self.renderer.clear()
+
         self.ship.render(self.renderer.renderer)
+
         for asteroid in self.asteroids:
             asteroid.render(self.renderer.renderer)
+
+        SingletonContainer.get_instance().get_singleton(
+            'BulletManager').render(self.renderer.renderer)
+
         self.renderer.present()
 
     def update(self, delta_time: float):
@@ -38,6 +45,9 @@ class Game():
             asteroid for asteroid in self.asteroids if not asteroid.is_dead()]
         for asteroid in self.asteroids:
             asteroid.update(delta_time)
+
+        SingletonContainer.get_instance().get_singleton(
+            'BulletManager').update(delta_time)
 
     def handle_events(self, event):
         '''
