@@ -4,7 +4,11 @@ This module contains unit tests for the math_utils module.
 
 import unittest
 
-from ..utils.math_utils import get_point_on_circle, is_point_on_right_side_of_line
+from ..utils.math_utils import (
+    get_point_on_circle,
+    is_point_on_right_side_of_line,
+    rotate_point
+)
 
 
 class TestMathUtils(unittest.TestCase):
@@ -43,3 +47,23 @@ class TestMathUtils(unittest.TestCase):
         point = (5, -5)
         self.assertFalse(is_point_on_right_side_of_line(
             start_point, end_point, point))
+
+    def test_rotate_point(self):
+        '''
+        This method tests the rotate_point function.
+        '''
+        point = (10, 0)
+        angle = 90
+        expected = (0, 10)
+        self.assertEqual(rotate_point(point, angle), expected)
+
+        point = (10, 0)
+        angle = 180
+        expected = (-10, 0)
+        self.assertEqual(rotate_point(point, angle), expected)
+
+        point = (10, 10)
+        angle = 45
+        origin = (5, 5)
+        expected = (5, 10)
+        self.assertEqual(rotate_point(point, angle, origin), expected)

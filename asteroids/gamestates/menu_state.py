@@ -8,6 +8,7 @@ import sdl2.ext
 
 from .abstract_game_state import AbstractGameState
 from ..utils import FontManager
+from ..gfx import MenuLines
 
 
 class MenuState(AbstractGameState):
@@ -32,6 +33,8 @@ class MenuState(AbstractGameState):
         self.start_game_texture = None
         self.quit_game_texture = None
 
+        self.menu_lines = MenuLines()
+
     def reset(self):
         '''
         Resets the game state.
@@ -52,6 +55,8 @@ class MenuState(AbstractGameState):
 
         renderer.clear()
 
+        self.menu_lines.render(renderer)
+
         renderer.copy(self.start_game_texture, dstrect=(100, 100))
         renderer.copy(self.quit_game_texture, dstrect=(100, 200))
 
@@ -61,6 +66,8 @@ class MenuState(AbstractGameState):
         '''
         Updates the game state.
         '''
+
+        self.menu_lines.update(delta_time)
 
     def handle_events(self, event):
         '''
