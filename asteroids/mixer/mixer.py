@@ -51,3 +51,13 @@ class Mixer():
         '''
 
         sdl2.sdlmixer.Mix_PlayChannel(-1, self.audio_files[sound], 0)
+
+    def dispose(self):
+        '''
+        Disposes of the mixer.
+        '''
+
+        sdl2.sdlmixer.Mix_FreeMusic(self.music)
+        for sound in self.audio_files.values():
+            sdl2.sdlmixer.Mix_FreeChunk(sound)
+        sdl2.sdlmixer.Mix_CloseAudio()

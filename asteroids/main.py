@@ -11,6 +11,7 @@ import sdl2.sdlttf
 
 from .mixer import Mixer
 from .gamestates import GameStateManager
+from .utils import FontManager
 
 
 def main():
@@ -61,6 +62,12 @@ def main():
             sdl2.SDL_Delay(int((1000 / 60) - delta_time))
 
         game_time = current_time
+
+    Mixer.get_instance().dispose()
+    FontManager.get_instance().dispose()
+
+    sdl2.sdlttf.TTF_Quit()
+    sdl2.sdlmixer.Mix_Quit()
 
     sdl2.ext.quit()
     return 0
