@@ -3,6 +3,7 @@ This module is responsible for managing the game states.
 '''
 
 from .game_state import GameState
+from .menu_state import MenuState
 
 
 class GameStateManager():
@@ -12,9 +13,10 @@ class GameStateManager():
 
     def __init__(self):
         self.states = {
+            'menu': MenuState(),
             'game': GameState(),
         }
-        self.current_state = 'game'
+        self.current_state = 'menu'
 
     def set_state(self, state_name):
         '''
