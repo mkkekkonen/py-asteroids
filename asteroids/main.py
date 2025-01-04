@@ -9,7 +9,8 @@ import sdl2
 import sdl2.sdlmixer
 import sdl2.sdlttf
 
-from .game import Game
+from .mixer import Mixer
+from .gamestates import GameStateManager
 
 
 def main():
@@ -33,7 +34,11 @@ def main():
     window = sdl2.ext.Window("Asteroids", size=(800, 600))
     window.show()
 
-    game = Game(window)
+    renderer = sdl2.ext.Renderer(window, flags=sdl2.SDL_RENDERER_SOFTWARE)
+
+    # Mixer.get_instance().play_music()
+
+    game_state_manager = GameStateManager()
 
     game_time = sdl2.SDL_GetTicks()
 
@@ -43,13 +48,13 @@ def main():
             if event.type == sdl2.SDL_QUIT:
                 running = False
                 break
-            game.handle_events(event)
+            game_state_manager.handle_events(event)
 
         current_time = sdl2.SDL_GetTicks()
         delta_time = current_time - game_time
 
-        game.render()
-        game.update(delta_time)
+        game_state_manager.render(renderer)
+        game_state_manager.update(delta_time)
         window.refresh()
 
         if delta_time < 1000 / 60:

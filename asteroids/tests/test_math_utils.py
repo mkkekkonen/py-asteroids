@@ -1,5 +1,5 @@
 '''
-This module contains the unit tests for the math_utils module.
+This module contains unit tests for the math_utils module.
 '''
 
 import unittest
