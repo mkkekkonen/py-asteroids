@@ -10,6 +10,15 @@ from .abstract_game_state import AbstractGameState
 from ..utils import FontManager
 from ..gfx import MenuLines
 
+SELECTED_COLOR = sdl2.SDL_Color(0, 255, 0)
+UNSELECTED_COLOR = sdl2.SDL_Color(0, 70, 0)
+
+START_GAME_TEXT = b'Start Game'
+QUIT_GAME_TEXT = b'Quit Game'
+
+START_GAME = 0
+QUIT_GAME = 1
+
 
 class MenuState(AbstractGameState):
     '''
@@ -21,17 +30,24 @@ class MenuState(AbstractGameState):
         Initializes the menu state.
         '''
 
-        menu_color = sdl2.SDL_Color(0, 255, 0)
-
         self.menu_font = FontManager.get_instance().fonts['menu']
 
-        self.start_game_surface = sdlttf.TTF_RenderText_Solid(
-            self.menu_font, b'Start Game', menu_color)
-        self.quit_game_surface = sdlttf.TTF_RenderText_Solid(
-            self.menu_font, b'Quit Game', menu_color)
+        self.selected_start_game_surface = sdlttf.TTF_RenderText_Solid(
+            self.menu_font, START_GAME_TEXT, SELECTED_COLOR)
+        self.selected_quit_game_surface = sdlttf.TTF_RenderText_Solid(
+            self.menu_font, QUIT_GAME_TEXT, SELECTED_COLOR)
 
-        self.start_game_texture = None
-        self.quit_game_texture = None
+        self.unselected_start_game_surface = sdlttf.TTF_RenderText_Solid(
+            self.menu_font, START_GAME_TEXT, UNSELECTED_COLOR)
+        self.unselected_quit_game_surface = sdlttf.TTF_RenderText_Solid(
+            self.menu_font, QUIT_GAME_TEXT, UNSELECTED_COLOR)
+
+        self.selected_start_game_texture = None
+        self.selected_quit_game_texture = None
+        self.unselected_start_game_texture = None
+        self.unselected_quit_game_texture = None
+
+        self.selected_item = START_GAME
 
         self.menu_lines = MenuLines()
 
@@ -45,20 +61,41 @@ class MenuState(AbstractGameState):
         Renders the game state.
         '''
 
-        if self.start_game_texture is None:
-            self.start_game_texture = sdl2.ext.renderer.Texture(
-                renderer, self.start_game_surface)
+        start_selected = self.selected_item == START_GAME
+        quit_selected = self.selected_item == QUIT_GAME
 
-        if self.quit_game_texture is None:
-            self.quit_game_texture = sdl2.ext.renderer.Texture(
-                renderer, self.quit_game_surface)
+        if self.selected_start_game_texture is None:
+            self.selected_start_game_texture = sdl2.ext.renderer.Texture(
+                renderer,
+                self.selected_start_game_surface)
+
+        if self.selected_quit_game_texture is None:
+            self.selected_quit_game_texture = sdl2.ext.renderer.Texture(
+                renderer,
+                self.selected_quit_game_surface)
+
+        if self.unselected_start_game_texture is None:
+            self.unselected_start_game_texture = sdl2.ext.renderer.Texture(
+                renderer,
+                self.unselected_start_game_surface)
+
+        if self.unselected_quit_game_texture is None:
+            self.unselected_quit_game_texture = sdl2.ext.renderer.Texture(
+                renderer,
+                self.unselected_quit_game_surface)
 
         renderer.clear()
 
         self.menu_lines.render(renderer)
 
-        renderer.copy(self.start_game_texture, dstrect=(100, 100))
-        renderer.copy(self.quit_game_texture, dstrect=(100, 200))
+        renderer.copy(
+            self.selected_start_game_texture if start_selected
+            else self.unselected_start_game_texture,
+            dstrect=(100, 100))
+        renderer.copy(
+            self.selected_quit_game_texture if quit_selected
+            else self.unselected_quit_game_texture,
+            dstrect=(100, 200))
 
         renderer.present()
 
@@ -69,7 +106,13 @@ class MenuState(AbstractGameState):
 
         self.menu_lines.update(delta_time)
 
-    def handle_events(self, event):
+    def handle_events(self, event: sdl2.SDL_Event):
         '''
         Handles events for the game state.
         '''
+
+        if event.type == sdl2.SDL_KEYDOWN:
+            if event.key.keysym.sym == sdl2.SDLK_DOWN:
+                self.selected_item = QUIT_GAME
+            elif event.key.keysym.sym == sdl2.SDLK_UP:
+                self.selected_item = START_GAME
