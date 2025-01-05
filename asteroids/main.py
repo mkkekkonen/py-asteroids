@@ -12,6 +12,7 @@ import sdl2.sdlttf
 from .mixer import Mixer
 from .gamestates import GameStateManager
 from .utils import FontManager
+from .game import QuitFlagContainer
 
 
 def main():
@@ -45,6 +46,11 @@ def main():
 
     running = True
     while running:
+        quit_flag = QuitFlagContainer.get_instance().get_quit_flag()
+        if quit_flag is True:
+            running = False
+            break
+
         for event in sdl2.ext.get_events():
             if event.type == sdl2.SDL_QUIT:
                 running = False

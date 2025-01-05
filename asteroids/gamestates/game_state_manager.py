@@ -13,8 +13,8 @@ class GameStateManager():
 
     def __init__(self):
         self.states = {
-            'menu': MenuState(),
-            'game': GameState(),
+            'menu': MenuState(self),
+            'game': GameState(self),
         }
         self.current_state = 'menu'
 

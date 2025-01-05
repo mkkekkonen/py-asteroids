@@ -10,8 +10,8 @@ class GameState(AbstractGameState):
     This class represents the game state.
     '''
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, game_state_manager):
+        super().__init__(game_state_manager)
 
         self.ship = None
         self.asteroids = None
