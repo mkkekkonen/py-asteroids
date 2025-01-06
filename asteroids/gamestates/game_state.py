@@ -11,6 +11,7 @@ from .abstract_game_state import AbstractGameState
 from ..gameobjects.ship import Ship
 from ..game.asteroid_generator import AsteroidGenerator
 from ..game.bullet_manager import BulletManager
+from ..game.particle_manager import ParticleManager
 from ..utils import FontManager
 
 FONT_COLOR = sdl2.SDL_Color(0, 255, 0)
@@ -45,6 +46,8 @@ class GameState(AbstractGameState):
         '''
         renderer.clear()
 
+        ParticleManager.get_instance().render(renderer.renderer)
+
         self.ship.render(renderer.renderer)
 
         for asteroid in self.asteroids:
@@ -71,6 +74,7 @@ class GameState(AbstractGameState):
         self.handle_bullet_collisions()
 
         BulletManager.get_instance().update(delta_time)
+        ParticleManager.get_instance().update(delta_time)
 
     def handle_events(self, event):
         '''

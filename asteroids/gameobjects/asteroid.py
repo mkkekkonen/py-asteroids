@@ -11,6 +11,7 @@ from .abstract_game_object import AbstractGameObject
 from ..utils.math_utils import (rotate_point, get_point_on_circle,
                                 is_point_on_right_side_of_line)
 from ..mixer import Mixer
+from ..game import ParticleManager
 
 
 class Asteroid(AbstractGameObject):
@@ -44,6 +45,7 @@ class Asteroid(AbstractGameObject):
 
         self.health -= 25
         if self.health <= 0 and not self.exploded:
+            ParticleManager.get_instance().create_explosion(self.position)
             self.exploded = True
             Mixer.get_instance().play_sound('explosion')
 
