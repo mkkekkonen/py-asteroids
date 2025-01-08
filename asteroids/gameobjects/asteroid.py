@@ -11,7 +11,7 @@ from .abstract_game_object import AbstractGameObject
 from ..utils.math_utils import (rotate_point, get_point_on_circle,
                                 is_point_on_right_side_of_line)
 from ..mixer import Mixer
-from ..game import ParticleManager
+from ..game.particle_manager import ParticleManager
 
 
 class Asteroid(AbstractGameObject):

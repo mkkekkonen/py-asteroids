@@ -10,6 +10,7 @@ class FontManager():
         self.fonts = {
             'menu': sdlttf.TTF_OpenFont(b'Orbitron.ttf', 24),
             'game': sdlttf.TTF_OpenFont(b'Orbitron.ttf', 36),
+            'small': sdlttf.TTF_OpenFont(b'Orbitron.ttf', 18)
         }
 
     @staticmethod
