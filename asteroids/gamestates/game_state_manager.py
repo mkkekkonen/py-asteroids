@@ -5,6 +5,7 @@ This module is responsible for managing the game states.
 from .game_state import GameState
 from .menu_state import MenuState
 from .add_high_score_state import AddHighScoreState
+from .high_scores_state import HighScoresState
 
 
 class GameStateManager():
@@ -16,9 +17,10 @@ class GameStateManager():
         self.states = {
             'menu': MenuState(self),
             'game': GameState(self),
+            'high_scores': HighScoresState(self),
             'add_high_score': AddHighScoreState(self),
         }
-        self.current_state = 'add_high_score'
+        self.current_state = 'high_scores'
 
     def set_state(self, state_name):
         '''
