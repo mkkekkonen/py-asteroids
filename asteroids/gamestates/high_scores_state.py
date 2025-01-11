@@ -2,8 +2,6 @@
 This module contains the high scores state class.
 '''
 
-import os
-
 from sdl2 import sdlttf
 import sdl2.ext
 
