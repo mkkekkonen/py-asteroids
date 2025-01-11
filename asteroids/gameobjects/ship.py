@@ -10,9 +10,7 @@ from sdl2.sdlgfx import trigonColor
 
 from .abstract_game_object import AbstractGameObject
 from ..utils.math_utils import get_point_on_circle
-from ..game.bullet_manager import BulletManager
-from ..mixer import Mixer
-
+from ..service_locator.service_locator import ServiceLocator, BULLET_MANAGER, MIXER
 
 BULLET_VELOCITY = 100
 
@@ -60,13 +58,12 @@ class Ship(AbstractGameObject):
             elif event.key.keysym.sym == sdl2.SDLK_DOWN:
                 self.acceleration = -0.1
             elif event.key.keysym.sym == sdl2.SDLK_SPACE:
-                (BulletManager.get_instance()
-                    .create_bullet(
-                        self.position,
-                        self.get_bullet_velocity(),
-                        self.rotation,
-                        0xFF00FF00))
-                Mixer.get_instance().play_sound('laser')
+                ServiceLocator.get(BULLET_MANAGER).create_bullet(
+                    self.position,
+                    self.get_bullet_velocity(),
+                    self.rotation,
+                    0xFF00FF00)
+                ServiceLocator.get(MIXER).play_sound('laser')
 
     def get_bullet_velocity(self):
         '''

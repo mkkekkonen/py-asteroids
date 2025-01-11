@@ -28,16 +28,6 @@ class Mixer():
             'explosion': sdl2.sdlmixer.Mix_LoadWAV(b'explosion.ogg')
         }
 
-    @staticmethod
-    def get_instance():
-        '''
-        Returns the singleton instance of the Mixer class.
-        '''
-
-        if not hasattr(Mixer, 'instance'):
-            Mixer.instance = Mixer()
-        return Mixer.instance
-
     def play_music(self):
         '''
         Plays the music.

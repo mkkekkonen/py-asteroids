@@ -14,15 +14,6 @@ class QuitFlagContainer:
     def __init__(self):
         self.quit_flag = False
 
-    @staticmethod
-    def get_instance():
-        '''
-        Returns the singleton instance of the QuitFlagContainer class.
-        '''
-        if not hasattr(QuitFlagContainer, 'instance'):
-            QuitFlagContainer.instance = QuitFlagContainer()
-        return QuitFlagContainer.instance
-
     def set_quit_flag(self):
         '''
         Sets the quit flag to True.

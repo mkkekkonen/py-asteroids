@@ -10,9 +10,8 @@ from .abstract_game_state import AbstractGameState
 
 from ..gameobjects.ship import Ship
 from ..game.asteroid_generator import AsteroidGenerator
-from ..game.bullet_manager import BulletManager
-from ..game.particle_manager import ParticleManager
-from ..utils import FontManager
+from ..service_locator.service_locator import (ServiceLocator, BULLET_MANAGER,
+                                               PARTICLE_MANAGER, FONT_MANAGER)
 
 FONT_COLOR = sdl2.SDL_Color(0, 255, 0)
 
@@ -46,14 +45,14 @@ class GameState(AbstractGameState):
         '''
         renderer.clear()
 
-        ParticleManager.get_instance().render(renderer.renderer)
+        ServiceLocator.get(PARTICLE_MANAGER).render(renderer.renderer)
 
         self.ship.render(renderer.renderer)
 
         for asteroid in self.asteroids:
             asteroid.render(renderer.renderer)
 
-        BulletManager.get_instance().render(renderer.renderer)
+        ServiceLocator.get(BULLET_MANAGER).render(renderer.renderer)
 
         self.render_time(renderer)
 
@@ -73,8 +72,8 @@ class GameState(AbstractGameState):
 
         self.handle_bullet_collisions()
 
-        BulletManager.get_instance().update(delta_time)
-        ParticleManager.get_instance().update(delta_time)
+        ServiceLocator.get(BULLET_MANAGER).update(delta_time)
+        ServiceLocator.get(PARTICLE_MANAGER).update(delta_time)
 
     def handle_events(self, event):
         '''
@@ -87,7 +86,7 @@ class GameState(AbstractGameState):
         Handles collisions between bullets and asteroids.
         '''
         for asteroid in self.asteroids:
-            for bullet in BulletManager.get_instance().bullets:
+            for bullet in ServiceLocator.get(BULLET_MANAGER).bullets:
                 if asteroid.is_point_inside(bullet.position):
                     asteroid.hit()
                     bullet.destroy()
@@ -105,7 +104,7 @@ class GameState(AbstractGameState):
         elapsed_time_text = f'{elapsed_minutes}:{padded_elapsed_seconds}'
 
         elapsed_time_surface = sdlttf.TTF_RenderText_Solid(
-            FontManager.get_instance().fonts['game'], elapsed_time_text.encode(), FONT_COLOR)
+            ServiceLocator.get(FONT_MANAGER).fonts['game'], elapsed_time_text.encode(), FONT_COLOR)
 
         elapsed_time_texture = sdl2.ext.renderer.Texture(
             renderer.renderer, elapsed_time_surface)

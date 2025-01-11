@@ -17,15 +17,6 @@ class ParticleManager():
     def __init__(self):
         self.particles = []
 
-    @staticmethod
-    def get_instance():
-        '''
-        Returns the instance of the ParticleManager.
-        '''
-        if not hasattr(ParticleManager, 'instance'):
-            ParticleManager.instance = ParticleManager()
-        return ParticleManager.instance
-
     def update(self, delta_time):
         '''
         Updates all the particles.

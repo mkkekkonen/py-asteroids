@@ -10,8 +10,7 @@ from sdl2.sdlgfx import lineColor
 from .abstract_game_object import AbstractGameObject
 from ..utils.math_utils import (rotate_point, get_point_on_circle,
                                 is_point_on_right_side_of_line)
-from ..mixer import Mixer
-from ..game.particle_manager import ParticleManager
+from ..service_locator.service_locator import ServiceLocator, PARTICLE_MANAGER, MIXER
 
 
 class Asteroid(AbstractGameObject):
@@ -45,9 +44,10 @@ class Asteroid(AbstractGameObject):
 
         self.health -= 25
         if self.health <= 0 and not self.exploded:
-            ParticleManager.get_instance().create_explosion(self.position)
+            ServiceLocator.get(
+                PARTICLE_MANAGER).create_explosion(self.position)
             self.exploded = True
-            Mixer.get_instance().play_sound('explosion')
+            ServiceLocator.get(MIXER).play_sound('explosion')
 
     def is_dead(self) -> bool:
         '''

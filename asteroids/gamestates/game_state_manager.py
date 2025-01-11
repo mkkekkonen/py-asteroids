@@ -20,7 +20,7 @@ class GameStateManager():
             'high_scores': HighScoresState(self),
             'add_high_score': AddHighScoreState(self),
         }
-        self.current_state = 'add_high_score'
+        self.current_state = 'menu'
 
     def set_state(self, state_name):
         '''

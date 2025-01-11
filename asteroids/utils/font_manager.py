@@ -1,3 +1,8 @@
+'''
+The font_manager module contains the FontManager class,
+which is used to load and manage fonts.
+'''
+
 from sdl2 import sdlttf
 
 
@@ -12,16 +17,6 @@ class FontManager():
             'game': sdlttf.TTF_OpenFont(b'Orbitron.ttf', 36),
             'small': sdlttf.TTF_OpenFont(b'Orbitron.ttf', 18)
         }
-
-    @staticmethod
-    def get_instance():
-        '''
-        Returns the instance of the FontManager.
-        '''
-
-        if not hasattr(FontManager, 'instance'):
-            FontManager.instance = FontManager()
-        return FontManager.instance
 
     def dispose(self):
         '''

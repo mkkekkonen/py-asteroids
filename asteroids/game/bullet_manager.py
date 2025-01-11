@@ -13,16 +13,6 @@ class BulletManager():
     def __init__(self):
         self.bullets = []
 
-    @staticmethod
-    def get_instance():
-        '''
-        Returns the instance of the BulletManager.
-        '''
-
-        if not hasattr(BulletManager, 'instance'):
-            BulletManager.instance = BulletManager()
-        return BulletManager.instance
-
     def render(self, renderer):
         '''
         Renders all the bullets.

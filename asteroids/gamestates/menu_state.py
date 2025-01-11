@@ -7,9 +7,8 @@ from sdl2 import sdlttf
 import sdl2.ext
 
 from .abstract_game_state import AbstractGameState
-from ..utils import FontManager
 from ..gfx import MenuLines
-from ..game import QuitFlagContainer
+from ..service_locator.service_locator import ServiceLocator, FONT_MANAGER, QUIT_FLAG_CONTAINER
 
 SELECTED_COLOR = sdl2.SDL_Color(0, 255, 0)
 UNSELECTED_COLOR = sdl2.SDL_Color(0, 70, 0)
@@ -33,7 +32,7 @@ class MenuState(AbstractGameState):
 
         super().__init__(game_state_manager)
 
-        self.menu_font = FontManager.get_instance().fonts['menu']
+        self.menu_font = ServiceLocator.get(FONT_MANAGER).fonts['menu']
 
         self.selected_start_game_surface = sdlttf.TTF_RenderText_Solid(
             self.menu_font, START_GAME_TEXT, SELECTED_COLOR)
@@ -123,4 +122,4 @@ class MenuState(AbstractGameState):
                 if self.selected_item == START_GAME:
                     self.game_state_manager.set_state('game')
                 elif self.selected_item == QUIT_GAME:
-                    QuitFlagContainer.get_instance().set_quit_flag()
+                    ServiceLocator.get(QUIT_FLAG_CONTAINER).set_quit_flag()

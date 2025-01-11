@@ -5,8 +5,8 @@ This module contains the high scores state class.
 from sdl2 import sdlttf
 import sdl2.ext
 
-from ..utils import FontManager
 from ..utils.high_score_utils import load_high_scores
+from ..service_locator.service_locator import ServiceLocator, FONT_MANAGER
 
 from .abstract_game_state import AbstractGameState
 
@@ -27,8 +27,8 @@ class HighScoresState(AbstractGameState):
 
         super().__init__(game_state_manager)
 
-        self.menu_font = FontManager.get_instance().fonts['menu']
-        self.small_font = FontManager.get_instance().fonts['small']
+        self.menu_font = ServiceLocator.get(FONT_MANAGER).fonts['menu']
+        self.small_font = ServiceLocator.get(FONT_MANAGER).fonts['small']
 
         self.no_high_scores_surface = sdlttf.TTF_RenderText_Solid(
             self.menu_font, b'No high scores', TEXT_COLOR)

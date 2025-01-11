@@ -9,10 +9,15 @@ import sdl2
 import sdl2.sdlmixer
 import sdl2.sdlttf
 
-from .mixer import Mixer
+from .mixer.mixer import Mixer
 from .gamestates import GameStateManager
-from .utils import FontManager
-from .game import QuitFlagContainer
+from .utils.font_manager import FontManager
+from .game.quit_flag import QuitFlagContainer
+from .game.bullet_manager import BulletManager
+from .game.particle_manager import ParticleManager
+from .service_locator.service_locator import (ServiceLocator, MIXER, FONT_MANAGER,
+                                              QUIT_FLAG_CONTAINER, BULLET_MANAGER,
+                                              PARTICLE_MANAGER)
 
 
 def main():
@@ -40,7 +45,13 @@ def main():
 
     renderer = sdl2.ext.Renderer(window, flags=sdl2.SDL_RENDERER_SOFTWARE)
 
-    # Mixer.get_instance().play_music()
+    ServiceLocator.register(MIXER, Mixer())
+    ServiceLocator.register(FONT_MANAGER, FontManager())
+    ServiceLocator.register(QUIT_FLAG_CONTAINER, QuitFlagContainer())
+    ServiceLocator.register(BULLET_MANAGER, BulletManager())
+    ServiceLocator.register(PARTICLE_MANAGER, ParticleManager())
+
+    # mixer.play_music()
 
     game_state_manager = GameStateManager()
 
@@ -48,7 +59,7 @@ def main():
 
     running = True
     while running:
-        quit_flag = QuitFlagContainer.get_instance().get_quit_flag()
+        quit_flag = ServiceLocator.get(QUIT_FLAG_CONTAINER).get_quit_flag()
         if quit_flag is True:
             running = False
             break
@@ -71,8 +82,8 @@ def main():
 
         game_time = current_time
 
-    Mixer.get_instance().dispose()
-    FontManager.get_instance().dispose()
+    ServiceLocator.get(MIXER).dispose()
+    ServiceLocator.get(FONT_MANAGER).dispose()
 
     sdl2.SDL_StopTextInput()
     sdl2.sdlttf.TTF_Quit()

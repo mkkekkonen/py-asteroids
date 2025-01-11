@@ -5,7 +5,7 @@ This module contains the add high score state.
 from sdl2 import sdlttf
 import sdl2.ext
 
-from ..utils import FontManager
+from ..service_locator.service_locator import ServiceLocator, FONT_MANAGER
 from ..utils.high_score_utils import load_high_scores
 
 from .abstract_game_state import AbstractGameState
@@ -27,12 +27,15 @@ class AddHighScoreState(AbstractGameState):
 
         super().__init__(game_state_manager)
 
-        self.menu_font = FontManager.get_instance().fonts['menu']
-        self.small_font = FontManager.get_instance().fonts['small']
+        self.menu_font = ServiceLocator.get(FONT_MANAGER).fonts['menu']
+        self.small_font = ServiceLocator.get(FONT_MANAGER).fonts['small']
         self.high_scores = []
 
         self.congrats_surface = sdlttf.TTF_RenderText_Solid(
             self.menu_font, b'Congratulations! You made it to the high scores!', TEXT_COLOR)
+        if not self.congrats_surface:
+            raise RuntimeError(f"Failed to create text surface: {
+                               sdl2.sdlttf.TTF_GetError().decode('utf-8')}")
 
         self.enter_name_surface = sdlttf.TTF_RenderText_Solid(
             self.small_font, b'Enter your name:', TEXT_COLOR)
