@@ -37,11 +37,15 @@ class AddHighScoreState(AbstractGameState):
         self.enter_name_surface = sdlttf.TTF_RenderText_Solid(
             self.small_font, b'Enter your name:', TEXT_COLOR)
 
+        self.confirm_surface = sdlttf.TTF_RenderText_Solid(
+            self.small_font, b'(Press ENTER to confirm)', TEXT_COLOR)
+
         self.name_surface = None
 
         self.congrats_texture = None
         self.enter_name_texture = None
         self.name_texture = None
+        self.confirm_texture = None
 
         self.name_text = ''
         self.name_changed = False
@@ -70,12 +74,18 @@ class AddHighScoreState(AbstractGameState):
                 self.name_surface)
             self.name_changed = False
 
+        if self.confirm_texture is None:
+            self.confirm_texture = sdl2.ext.Texture(
+                renderer,
+                self.confirm_surface)
+
         renderer.clear()
 
         renderer.copy(self.congrats_texture, dstrect=(100, 100))
         renderer.copy(self.enter_name_texture, dstrect=(100, 200))
         if self.name_texture is not None:
             renderer.copy(self.name_texture, dstrect=(150, 250))
+        renderer.copy(self.confirm_texture, dstrect=(100, 320))
 
         renderer.present()
 
