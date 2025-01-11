@@ -8,7 +8,8 @@ import sdl2.ext
 
 from .abstract_game_state import AbstractGameState
 from ..gfx import MenuLines
-from ..service_locator.service_locator import ServiceLocator, FONT_MANAGER, QUIT_FLAG_CONTAINER
+from ..service_locator.service_locator import (ServiceLocator, FONT_MANAGER,
+                                               QUIT_FLAG_CONTAINER, GAME_STATE_MANAGER)
 
 SELECTED_COLOR = sdl2.SDL_Color(0, 255, 0)
 UNSELECTED_COLOR = sdl2.SDL_Color(0, 70, 0)
@@ -25,12 +26,10 @@ class MenuState(AbstractGameState):
     This class represents the menu state.
     '''
 
-    def __init__(self, game_state_manager):
+    def __init__(self):
         '''
         Initializes the menu state.
         '''
-
-        super().__init__(game_state_manager)
 
         self.menu_font = ServiceLocator.get(FONT_MANAGER).fonts['menu']
 
@@ -120,6 +119,6 @@ class MenuState(AbstractGameState):
                 self.selected_item = START_GAME
             elif event.key.keysym.sym == sdl2.SDLK_RETURN:
                 if self.selected_item == START_GAME:
-                    self.game_state_manager.set_state('game')
+                    ServiceLocator.get(GAME_STATE_MANAGER).set_state('game')
                 elif self.selected_item == QUIT_GAME:
                     ServiceLocator.get(QUIT_FLAG_CONTAINER).set_quit_flag()

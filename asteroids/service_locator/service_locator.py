@@ -8,6 +8,7 @@ FONT_MANAGER = 'font_manager'
 QUIT_FLAG_CONTAINER = 'quit_flag_container'
 BULLET_MANAGER = 'bullet_manager'
 PARTICLE_MANAGER = 'particle_manager'
+GAME_STATE_MANAGER = 'game_state_manager'
 
 
 class ServiceLocator:

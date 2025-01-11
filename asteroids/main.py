@@ -17,7 +17,7 @@ from .game.bullet_manager import BulletManager
 from .game.particle_manager import ParticleManager
 from .service_locator.service_locator import (ServiceLocator, MIXER, FONT_MANAGER,
                                               QUIT_FLAG_CONTAINER, BULLET_MANAGER,
-                                              PARTICLE_MANAGER)
+                                              PARTICLE_MANAGER, GAME_STATE_MANAGER)
 
 
 def main():
@@ -50,10 +50,9 @@ def main():
     ServiceLocator.register(QUIT_FLAG_CONTAINER, QuitFlagContainer())
     ServiceLocator.register(BULLET_MANAGER, BulletManager())
     ServiceLocator.register(PARTICLE_MANAGER, ParticleManager())
+    ServiceLocator.register(GAME_STATE_MANAGER, GameStateManager())
 
     # mixer.play_music()
-
-    game_state_manager = GameStateManager()
 
     game_time = sdl2.SDL_GetTicks()
 
@@ -68,13 +67,13 @@ def main():
             if event.type == sdl2.SDL_QUIT:
                 running = False
                 break
-            game_state_manager.handle_events(event)
+            ServiceLocator.get(GAME_STATE_MANAGER).handle_events(event)
 
         current_time = sdl2.SDL_GetTicks()
         delta_time = current_time - game_time
 
-        game_state_manager.render(renderer)
-        game_state_manager.update(delta_time)
+        ServiceLocator.get(GAME_STATE_MANAGER).render(renderer)
+        ServiceLocator.get(GAME_STATE_MANAGER).update(delta_time)
         window.refresh()
 
         if delta_time < 1000 / 60:

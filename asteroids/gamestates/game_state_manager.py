@@ -15,10 +15,10 @@ class GameStateManager():
 
     def __init__(self):
         self.states = {
-            'menu': MenuState(self),
-            'game': GameState(self),
-            'high_scores': HighScoresState(self),
-            'add_high_score': AddHighScoreState(self),
+            'menu': MenuState(),
+            'game': GameState(),
+            'high_scores': HighScoresState(),
+            'add_high_score': AddHighScoreState(),
         }
         self.current_state = 'menu'
 

@@ -6,7 +6,8 @@ from sdl2 import sdlttf
 import sdl2.ext
 
 from ..utils.high_score_utils import load_high_scores
-from ..service_locator.service_locator import ServiceLocator, FONT_MANAGER
+from ..service_locator.service_locator import (ServiceLocator, FONT_MANAGER,
+                                               GAME_STATE_MANAGER)
 
 from .abstract_game_state import AbstractGameState
 
@@ -20,12 +21,10 @@ class HighScoresState(AbstractGameState):
     This class represents the high scores state.
     '''
 
-    def __init__(self, game_state_manager):
+    def __init__(self):
         '''
         Initializes the high scores state.
         '''
-
-        super().__init__(game_state_manager)
 
         self.menu_font = ServiceLocator.get(FONT_MANAGER).fonts['menu']
         self.small_font = ServiceLocator.get(FONT_MANAGER).fonts['small']
@@ -68,4 +67,4 @@ class HighScoresState(AbstractGameState):
     def handle_events(self, event):
         if event.type == sdl2.SDL_KEYDOWN:
             if event.key.keysym.sym == sdl2.SDLK_ESCAPE:
-                self.game_state_manager.set_state('menu')
+                ServiceLocator.get(GAME_STATE_MANAGER).set_state('menu')

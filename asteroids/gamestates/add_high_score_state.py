@@ -20,12 +20,10 @@ class AddHighScoreState(AbstractGameState):
     This class represents the add high score state.
     '''
 
-    def __init__(self, game_state_manager):
+    def __init__(self):
         '''
         Initializes the add high score state.
         '''
-
-        super().__init__(game_state_manager)
 
         self.menu_font = ServiceLocator.get(FONT_MANAGER).fonts['menu']
         self.small_font = ServiceLocator.get(FONT_MANAGER).fonts['small']

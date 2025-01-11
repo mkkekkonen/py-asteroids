@@ -8,11 +8,10 @@ class AbstractGameState():
     Abstract class for game states.
     '''
 
-    def __init__(self, game_state_manager):
+    def __init__(self):
         '''
         Initializes the game state.
         '''
-        self.game_state_manager = game_state_manager
 
     def reset(self):
         '''
