@@ -5,9 +5,8 @@ This module contains the add high score state.
 from sdl2 import sdlttf
 import sdl2.ext
 
-import os
-
 from ..utils import FontManager
+from ..utils.high_score_utils import load_high_scores
 
 from .abstract_game_state import AbstractGameState
 
@@ -32,46 +31,51 @@ class AddHighScoreState(AbstractGameState):
         self.small_font = FontManager.get_instance().fonts['small']
         self.high_scores = []
 
-        self.no_high_scores_surface = sdlttf.TTF_RenderText_Solid(
-            self.menu_font, b'No high scores', TEXT_COLOR)
+        self.congrats_surface = sdlttf.TTF_RenderText_Solid(
+            self.menu_font, b'Congratulations! You made it to the high scores!', TEXT_COLOR)
 
-        self.esc_surface = sdlttf.TTF_RenderText_Solid(
-            self.small_font, b'(Press ESC to return to the menu)', TEXT_COLOR)
+        self.enter_name_surface = sdlttf.TTF_RenderText_Solid(
+            self.small_font, b'Enter your name:', TEXT_COLOR)
 
-        self.no_high_scores_texture = None
-        self.esc_texture = None
+        self.name_surface = None
 
-        self.load_high_scores()
+        self.congrats_texture = None
+        self.enter_name_texture = None
+        self.name_texture = None
 
-    def load_high_scores(self):
-        '''
-        Loads the high scores.
-        '''
+        self.name_text = ''
+        self.name_changed = False
 
-        file_exists = os.path.exists(FILE_NAME)
-
-        if file_exists:
-            with open(FILE_NAME, 'r', encoding='utf8') as high_scores_file:
-                self.high_scores = high_scores_file.readlines()
+        self.high_scores = load_high_scores()
 
     def reset(self):
         pass
 
     def render(self, renderer):
-        if self.no_high_scores_texture is None:
-            self.no_high_scores_texture = sdl2.ext.renderer.Texture(
+        if self.congrats_texture is None:
+            self.congrats_texture = sdl2.ext.Texture(
                 renderer,
-                self.no_high_scores_surface)
+                self.congrats_surface)
 
-        if self.esc_texture is None:
-            self.esc_texture = sdl2.ext.renderer.Texture(
+        if self.enter_name_texture is None:
+            self.enter_name_texture = sdl2.ext.Texture(
                 renderer,
-                self.esc_surface)
+                self.enter_name_surface)
+
+        if self.name_changed is True:
+            self.name_surface = sdlttf.TTF_RenderText_Solid(
+                self.menu_font, self.name_text.encode('utf-8'), TEXT_COLOR)
+            self.name_texture = sdl2.ext.Texture(
+                renderer,
+                self.name_surface)
+            self.name_changed = False
 
         renderer.clear()
 
-        renderer.copy(self.no_high_scores_texture, dstrect=(100, 100))
-        renderer.copy(self.esc_texture, dstrect=(100, 200))
+        renderer.copy(self.congrats_texture, dstrect=(100, 100))
+        renderer.copy(self.enter_name_texture, dstrect=(100, 200))
+        if self.name_texture is not None:
+            renderer.copy(self.name_texture, dstrect=(150, 250))
 
         renderer.present()
 
@@ -79,4 +83,6 @@ class AddHighScoreState(AbstractGameState):
         pass
 
     def handle_events(self, event):
-        pass
+        if event.type == sdl2.SDL_TEXTINPUT:
+            self.name_text += event.text.text.decode('utf-8')
+            self.name_changed = True

@@ -33,6 +33,8 @@ def main():
     if mix_result != mixer_flags:
         return mix_result
 
+    sdl2.SDL_StartTextInput()
+
     window = sdl2.ext.Window("Asteroids", size=(800, 600))
     window.show()
 
@@ -72,6 +74,7 @@ def main():
     Mixer.get_instance().dispose()
     FontManager.get_instance().dispose()
 
+    sdl2.SDL_StopTextInput()
     sdl2.sdlttf.TTF_Quit()
     sdl2.sdlmixer.Mix_Quit()
 
