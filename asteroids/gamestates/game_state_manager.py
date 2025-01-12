@@ -46,3 +46,9 @@ class GameStateManager():
         Handles events for the current game state.
         '''
         self.states[self.current_state].handle_events(event)
+
+    def reset_add_high_score_state(self):
+        '''
+        Resets the add high score state.
+        '''
+        self.states['add_high_score'].reset()

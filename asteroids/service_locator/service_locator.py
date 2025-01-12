@@ -9,6 +9,7 @@ QUIT_FLAG_CONTAINER = 'quit_flag_container'
 BULLET_MANAGER = 'bullet_manager'
 PARTICLE_MANAGER = 'particle_manager'
 GAME_STATE_MANAGER = 'game_state_manager'
+STATS_MANAGER = 'stats_manager'
 
 
 class ServiceLocator:

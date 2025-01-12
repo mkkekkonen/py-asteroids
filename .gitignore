@@ -1,3 +1,5 @@
 .venv/
 
 *.pyc
+
+high_scores.txt

@@ -108,3 +108,16 @@ def calculate_intersection_points(line_start, line_end, window_width, window_hei
                 intersections.append((int(x), int(y)))
 
     return intersections
+
+
+def format_time(milliseconds):
+    '''
+    Formats the time in milliseconds to a string in the format mm:ss.
+    '''
+
+    elapsed_minutes = milliseconds // 60000
+    elapsed_seconds = (milliseconds // 1000) % 60
+
+    padded_elapsed_seconds = str(elapsed_seconds).zfill(2)
+
+    return f'{elapsed_minutes}:{padded_elapsed_seconds}'

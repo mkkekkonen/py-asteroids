@@ -15,9 +15,11 @@ from .utils.font_manager import FontManager
 from .game.quit_flag import QuitFlagContainer
 from .game.bullet_manager import BulletManager
 from .game.particle_manager import ParticleManager
+from .game.game_stats_manager import GameStatsManager
 from .service_locator.service_locator import (ServiceLocator, MIXER, FONT_MANAGER,
                                               QUIT_FLAG_CONTAINER, BULLET_MANAGER,
-                                              PARTICLE_MANAGER, GAME_STATE_MANAGER)
+                                              PARTICLE_MANAGER, GAME_STATE_MANAGER,
+                                              STATS_MANAGER)
 
 
 def main():
@@ -51,6 +53,7 @@ def main():
     ServiceLocator.register(BULLET_MANAGER, BulletManager())
     ServiceLocator.register(PARTICLE_MANAGER, ParticleManager())
     ServiceLocator.register(GAME_STATE_MANAGER, GameStateManager())
+    ServiceLocator.register(STATS_MANAGER, GameStatsManager())
 
     # mixer.play_music()
 
