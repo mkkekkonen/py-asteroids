@@ -53,3 +53,9 @@ class ParticleManager():
         '''
         self.particles = [
             particle for particle in self.particles if not particle.dead]
+
+    def reset(self):
+        '''
+        Resets the particle manager.
+        '''
+        self.particles = []

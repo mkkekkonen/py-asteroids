@@ -52,3 +52,9 @@ class GameStateManager():
         Resets the add high score state.
         '''
         self.states['add_high_score'].reset()
+
+    def reset_high_scores_state(self):
+        '''
+        Resets the high scores state.
+        '''
+        self.states['high_scores'].reset()

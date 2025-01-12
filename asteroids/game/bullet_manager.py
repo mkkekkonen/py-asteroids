@@ -37,3 +37,10 @@ class BulletManager():
         '''
 
         self.bullets.append(Bullet(position, velocity, rotation, color))
+
+    def reset(self):
+        '''
+        Resets the bullet manager.
+        '''
+
+        self.bullets = []

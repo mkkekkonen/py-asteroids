@@ -36,8 +36,15 @@ class GameState(AbstractGameState):
         '''
         Resets the game state.
         '''
+
+        self.game_start_time = sdl2.SDL_GetTicks()
+        self.elapsed_time = 0
+
         self.ship = Ship((400, 300), 20, 0, 0, 0)
         self.asteroids = AsteroidGenerator().generate(5)
+
+        ServiceLocator.get(BULLET_MANAGER).reset()
+        ServiceLocator.get(PARTICLE_MANAGER).reset()
 
     def render(self, renderer):
         '''
