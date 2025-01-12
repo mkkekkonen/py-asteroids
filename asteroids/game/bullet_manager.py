@@ -2,7 +2,7 @@
 This module is responsible for managing the bullets in the game.
 '''
 
-from ..gameobjects.bullet import Bullet
+from asteroids.gameobjects.bullet import Bullet
 
 
 class BulletManager():

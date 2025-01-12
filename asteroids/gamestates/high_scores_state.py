@@ -5,13 +5,13 @@ This module contains the high scores state class.
 from sdl2 import sdlttf
 import sdl2.ext
 
-from ..utils.high_score_utils import load_high_scores
-from ..utils.math_utils import format_time
-from ..service_locator.service_locator import (ServiceLocator, FONT_MANAGER,
-                                               GAME_STATE_MANAGER)
-from ..gfx import MenuLines
+from asteroids.utils.high_score_utils import load_high_scores
+from asteroids.utils.math_utils import format_time
+from asteroids.service_locator.service_locator import (ServiceLocator, FONT_MANAGER,
+                                                       GAME_STATE_MANAGER)
+from asteroids.gfx import MenuLines
 
-from .abstract_game_state import AbstractGameState
+from asteroids.gamestates.abstract_game_state import AbstractGameState
 
 FILE_NAME = 'high_scores.txt'
 

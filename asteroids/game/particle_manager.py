@@ -4,7 +4,7 @@ A module for managing particles.
 
 import random
 
-from ..gameobjects.particle import Particle
+from asteroids.gameobjects.particle import Particle
 
 COLOR = 0xFF00FF00
 

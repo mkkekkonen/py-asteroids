@@ -2,6 +2,6 @@
 This module is used to import all the game objects in the game.
 '''
 
-from .ship import Ship
-from .asteroid import Asteroid
-from .bullet import Bullet
+from asteroids.gameobjects.ship import Ship
+from asteroids.gameobjects.asteroid import Asteroid
+from asteroids.gameobjects.bullet import Bullet

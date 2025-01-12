@@ -8,9 +8,9 @@ import sdl2
 from sdl2 import SDL_SetRenderDrawColor
 from sdl2.sdlgfx import trigonColor
 
-from .abstract_game_object import AbstractGameObject
-from ..utils.math_utils import get_point_on_circle
-from ..service_locator.service_locator import ServiceLocator, BULLET_MANAGER, MIXER
+from asteroids.gameobjects.abstract_game_object import AbstractGameObject
+from asteroids.utils.math_utils import get_point_on_circle
+from asteroids.service_locator.service_locator import ServiceLocator, BULLET_MANAGER, MIXER
 
 BULLET_VELOCITY = 100
 

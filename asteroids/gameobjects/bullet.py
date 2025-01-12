@@ -5,8 +5,8 @@ This module contains the Bullet class.
 import sdl2
 from sdl2.sdlgfx import lineColor
 
-from ..utils.math_utils import rotate_point
-from .abstract_game_object import AbstractGameObject
+from asteroids.utils.math_utils import rotate_point
+from asteroids.gameobjects.abstract_game_object import AbstractGameObject
 
 BULLET_LENGTH = 5
 

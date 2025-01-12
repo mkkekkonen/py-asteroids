@@ -2,4 +2,4 @@
 Utils package for Asteroids game.
 '''
 
-from .font_manager import FontManager
+from asteroids.utils.font_manager import FontManager

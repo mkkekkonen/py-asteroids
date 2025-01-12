@@ -9,17 +9,17 @@ import sdl2
 import sdl2.sdlmixer
 import sdl2.sdlttf
 
-from .mixer.mixer import Mixer
-from .gamestates import GameStateManager
-from .utils.font_manager import FontManager
-from .game.quit_flag import QuitFlagContainer
-from .game.bullet_manager import BulletManager
-from .game.particle_manager import ParticleManager
-from .game.game_stats_manager import GameStatsManager
-from .service_locator.service_locator import (ServiceLocator, MIXER, FONT_MANAGER,
-                                              QUIT_FLAG_CONTAINER, BULLET_MANAGER,
-                                              PARTICLE_MANAGER, GAME_STATE_MANAGER,
-                                              STATS_MANAGER)
+from asteroids.mixer.mixer import Mixer
+from asteroids.gamestates import GameStateManager
+from asteroids.utils.font_manager import FontManager
+from asteroids.game.quit_flag import QuitFlagContainer
+from asteroids.game.bullet_manager import BulletManager
+from asteroids.game.particle_manager import ParticleManager
+from asteroids.game.game_stats_manager import GameStatsManager
+from asteroids.service_locator.service_locator import (ServiceLocator, MIXER, FONT_MANAGER,
+                                                       QUIT_FLAG_CONTAINER, BULLET_MANAGER,
+                                                       PARTICLE_MANAGER, GAME_STATE_MANAGER,
+                                                       STATS_MANAGER)
 
 
 def main():
@@ -55,7 +55,7 @@ def main():
     ServiceLocator.register(GAME_STATE_MANAGER, GameStateManager())
     ServiceLocator.register(STATS_MANAGER, GameStatsManager())
 
-    # mixer.play_music()
+    ServiceLocator.get(MIXER).play_music()
 
     game_time = sdl2.SDL_GetTicks()
 

@@ -6,14 +6,14 @@ import sdl2
 import sdl2.ext
 from sdl2 import sdlttf
 
-from .abstract_game_state import AbstractGameState
+from asteroids.gamestates.abstract_game_state import AbstractGameState
 
-from ..gameobjects.ship import Ship
-from ..game.asteroid_generator import AsteroidGenerator
-from ..service_locator.service_locator import (ServiceLocator, BULLET_MANAGER,
-                                               PARTICLE_MANAGER, FONT_MANAGER,
-                                               STATS_MANAGER, GAME_STATE_MANAGER)
-from ..utils.math_utils import format_time
+from asteroids.gameobjects.ship import Ship
+from asteroids.game.asteroid_generator import AsteroidGenerator
+from asteroids.service_locator.service_locator import (ServiceLocator, BULLET_MANAGER,
+                                                       PARTICLE_MANAGER, FONT_MANAGER,
+                                                       STATS_MANAGER, GAME_STATE_MANAGER)
+from asteroids.utils.math_utils import format_time
 
 FONT_COLOR = sdl2.SDL_Color(0, 255, 0)
 
@@ -93,6 +93,10 @@ class GameState(AbstractGameState):
         Handles events for the game state.
         '''
         self.ship.handle_events(event)
+
+        if event.type == sdl2.SDL_KEYDOWN:
+            if event.key.keysym.sym == sdl2.SDLK_ESCAPE:
+                ServiceLocator.get(GAME_STATE_MANAGER).set_state('menu')
 
     def handle_bullet_collisions(self):
         '''

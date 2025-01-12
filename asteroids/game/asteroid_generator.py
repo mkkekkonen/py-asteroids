@@ -4,7 +4,7 @@ This module contains the AsteroidGenerator class.
 
 import random
 
-from ..gameobjects import Asteroid
+from asteroids.gameobjects import Asteroid
 
 
 class AsteroidGenerator():

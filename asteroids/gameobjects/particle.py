@@ -7,9 +7,9 @@ import random
 import sdl2
 from sdl2.sdlgfx import lineColor
 
-from ..utils.math_utils import rotate_point
+from asteroids.utils.math_utils import rotate_point
 
-from .abstract_game_object import AbstractGameObject
+from asteroids.gameobjects.abstract_game_object import AbstractGameObject
 
 
 class Particle(AbstractGameObject):

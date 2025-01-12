@@ -3,7 +3,7 @@ This module handles audio output.
 '''
 
 import sdl2.sdlmixer
-from ..utils.exceptions import MixerInitializationError
+from asteroids.utils.exceptions import MixerInitializationError
 
 
 class Mixer():

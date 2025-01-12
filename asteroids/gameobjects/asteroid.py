@@ -7,10 +7,10 @@ import random
 from sdl2 import SDL_SetRenderDrawColor
 from sdl2.sdlgfx import lineColor
 
-from .abstract_game_object import AbstractGameObject
-from ..utils.math_utils import (rotate_point, get_point_on_circle,
-                                is_point_on_right_side_of_line)
-from ..service_locator.service_locator import ServiceLocator, PARTICLE_MANAGER, MIXER
+from asteroids.gameobjects.abstract_game_object import AbstractGameObject
+from asteroids.utils.math_utils import (rotate_point, get_point_on_circle,
+                                        is_point_on_right_side_of_line)
+from asteroids.service_locator.service_locator import ServiceLocator, PARTICLE_MANAGER, MIXER
 
 
 class Asteroid(AbstractGameObject):

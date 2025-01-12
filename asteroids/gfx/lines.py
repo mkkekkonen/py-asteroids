@@ -6,7 +6,7 @@ menu background lines.
 from sdl2.sdlgfx import lineColor
 import sdl2
 
-from ..utils.math_utils import rotate_point, calculate_intersection_points
+from asteroids.utils.math_utils import rotate_point, calculate_intersection_points
 
 COLOR = 0xFF008800
 

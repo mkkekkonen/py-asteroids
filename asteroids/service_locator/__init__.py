@@ -2,4 +2,4 @@
 Service Locator pattern implementation.
 '''
 
-from .service_locator import ServiceLocator
+from asteroids.service_locator.service_locator import ServiceLocator

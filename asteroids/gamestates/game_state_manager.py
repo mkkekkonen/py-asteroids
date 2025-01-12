@@ -2,10 +2,10 @@
 This module is responsible for managing the game states.
 '''
 
-from .game_state import GameState
-from .menu_state import MenuState
-from .add_high_score_state import AddHighScoreState
-from .high_scores_state import HighScoresState
+from asteroids.gamestates.game_state import GameState
+from asteroids.gamestates.menu_state import MenuState
+from asteroids.gamestates.add_high_score_state import AddHighScoreState
+from asteroids.gamestates.high_scores_state import HighScoresState
 
 
 class GameStateManager():

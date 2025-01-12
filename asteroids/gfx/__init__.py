@@ -2,4 +2,4 @@
 This package contains utilities for the game graphics.
 '''
 
-from .lines import MenuLines
+from asteroids.gfx.lines import MenuLines
